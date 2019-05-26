@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signup.Controller">
+   <children>
+      <Label layoutX="148.0" layoutY="107.0" prefHeight="20.0" prefWidth="66.0" text="用户名：" />
+      <TextField layoutX="214.0" layoutY="102.0" promptText="请输入用户名" />
+      <Label layoutX="148.0" layoutY="185.0" text="密码：" />
+      <TextField layoutX="214.0" layoutY="180.0" promptText="请输入密码" />
+      <Button layoutX="106.0" layoutY="308.0" mnemonicParsing="false" text="确认" />
+      <Button fx:id="Cancel" layoutX="470.0" layoutY="308.0" mnemonicParsing="false" onAction="#exit" text="取消" />
+      <Label layoutX="85.0" layoutY="256.0" prefHeight="20.0" prefWidth="129.0" text="请再次输入密码：" />
+      <TextField layoutX="214.0" layoutY="251.0" promptText="请再次确认密码" />
+   </children>
+</Pane>
