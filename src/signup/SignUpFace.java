@@ -18,7 +18,7 @@ public class SignUpFace {
             Scene window = new Scene(signFace, 600, 400);
             stage.setScene(window);
             stage.setTitle("欢迎注册");
-            stage.showAndWait();
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
