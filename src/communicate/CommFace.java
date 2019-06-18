@@ -6,9 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.Socket;
 
 public class CommFace {
-    public void showCommFace() {
+    private String name;
+    public void showCommFace(String name) {
+        this.name = name;
         Stage stage = new Stage();
         /**
          * 通过fxml文件来创建注册界面
@@ -22,6 +25,18 @@ public class CommFace {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        client(name);
+        stage.show();
 
+    }
+
+    public void client(String name){
+        try {
+            Socket socket = new Socket("localhost",12345);
+            new Thread(new Send(socket,name)).start();
+            new Thread(new Receive(socket)).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

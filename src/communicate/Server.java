@@ -5,21 +5,29 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Server {
-    static private CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
+public class Server implements Runnable {
+    private static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
 
-    public Server() throws IOException {
-        System.out.println("----Server----");
-        ServerSocket server = new ServerSocket(7888);
+    @Override
+    public void run() {
+        try {
+            Server();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Server() throws IOException {
+        System.out.println("-----Server-----");
+        ServerSocket server = new ServerSocket(12345);
         while (true) {
             Socket client = server.accept();
             System.out.println("一个客户端建立了连接");
-            Channel c = new Channel(client);
-            all.add(c);
-            new Thread(c).start();
+            Channel channel = new Channel(client);
+            all.add(channel);
+            new Thread(channel).start();
         }
     }
 
@@ -37,8 +45,9 @@ public class Server {
                 dos = new DataOutputStream(client.getOutputStream());
                 isRunning = true;
                 this.name = receive();
-                this.send("欢迎你的到来");
-                sendOthers(this.name + "来到了聊天室", true);
+                this.send("欢迎" + name + "的到来");
+                //发给其他人
+                sendOthers(this.name + "进入聊天室", true);
             } catch (IOException e) {
                 System.out.println("构建异常");
                 release();
@@ -46,14 +55,14 @@ public class Server {
         }
 
         private String receive() {
-            String msg = "";
+            String message = "";
             try {
-                msg = dis.readUTF();
-            } catch (IOException e) {
+                message = dis.readUTF();
+            } catch (Exception e) {
                 System.out.println("接收异常");
                 release();
             }
-            return msg;
+            return message;
         }
 
         private void send(String msg) {
@@ -66,28 +75,22 @@ public class Server {
             }
         }
 
-        /**
-         * 群聊
-         */
         private void sendOthers(String msg, boolean isSys) {
-            boolean isPrivate = msg.startsWith("@");
+            //判断是否有@
+            Boolean isPrivate = msg.startsWith("@");
             if (isPrivate) {
-                int idx = msg.indexOf("：");
-                String targetName = msg.substring(1, idx);
-                msg = msg.substring(idx + 1);
+                int index = msg.indexOf(":");
+                String targetName = msg.substring(1, index);
+                msg = msg.substring(index + 1);
                 for (Channel other : all) {
                     if (other.name.equals(targetName)) {
-                        other.send(this.name + "悄悄地对你说：" + msg);
-                        break;
+                        other.send(this.name + "私聊你：" + msg);
                     }
                 }
             } else {
                 for (Channel other : all) {
-                    if (other == this) {
-                        continue;
-                    }
                     if (!isSys) {
-                        other.send(this.name + "对所有人说" + msg);
+                        other.send(this.name + "：\n" + msg);
                     } else {
                         other.send(msg);
                     }
@@ -99,7 +102,7 @@ public class Server {
             this.isRunning = false;
             ReUtils.close(dis, dos, client);
             all.remove(this);
-            sendOthers(this.name + "离开聊天室", true);
+            sendOthers(this.name + "离开聊天室", false);
         }
 
         @Override
@@ -107,10 +110,10 @@ public class Server {
             while (isRunning) {
                 String msg = receive();
                 if (!msg.equals("")) {
-//                    send(msg);
                     sendOthers(msg, false);
                 }
             }
         }
     }
+
 }

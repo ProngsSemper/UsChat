@@ -3,6 +3,7 @@ package signup;
 import dao.UsersDao;
 import db.DBUtil;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Users;
@@ -13,8 +14,8 @@ import java.sql.SQLException;
 public class Controller {
     public Button Cancel;
     public TextField signUpUsernameField;
-    public TextField signUpPasswordField;
-    public TextField passwordAgainField;
+    public PasswordField signUpPasswordField;
+    public PasswordField passwordAgainField;
 
     /**
      * 点击取消时可关闭窗口

@@ -1,25 +1,21 @@
-package main;
+package login;
 
-import communicate.Client;
 import communicate.CommFace;
-import communicate.Server;
 import dao.UsersDao;
 import db.DBUtil;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import model.LoginUsers;
-import model.Users;
 import signup.AlterBox;
 import signup.SignUpFace;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 
 public class Controller {
     @FXML
     public javafx.scene.control.TextField loginUsernameField;
     @FXML
-    public TextField loginPasswordField;
+    public PasswordField loginPasswordField;
 
     /**
      * 点击注册按钮时弹出注册窗口
@@ -44,25 +40,15 @@ public class Controller {
             if (!(passwordResult.next())) {
                 AlterBox.display("登陆失败！", "密码错误！");
             } else {
+                /**
+                 * 将登陆用户写进数据库
+                 */
                 UsersDao loginUser = new UsersDao();
                 LoginUsers loginUsers = new LoginUsers();
                 loginUsers.setLoginUsers(loginUsernameField.getText());
                 loginUser.addLoginUser(loginUsers);
-                UserName.name = loginUsernameField.getText();
-                new Thread(){
-                    @Override
-                    public void run(){
-                        try {
-                            Server server = new Server();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-                Thread.sleep(1000);
-                Client client = new Client();
-                CommFace chat = new CommFace();
-                chat.showCommFace();
+                CommFace commFace = new CommFace();
+                commFace.showCommFace(loginUsernameField.getText());
             }
         } else if (!(usernameResult.next())) {
             AlterBox.display("登陆失败！", "用户名错误或未注册！");

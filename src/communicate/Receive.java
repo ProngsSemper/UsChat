@@ -37,7 +37,7 @@ public class Receive implements Runnable {
         while (isRunning){
             String msg = receive();
             if (!msg.equals("")){
-                System.out.println(msg);
+               CommController.getInstance().msgArea.appendText("\n"+msg);
             }
         }
     }

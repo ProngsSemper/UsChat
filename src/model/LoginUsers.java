@@ -17,4 +17,11 @@ public class LoginUsers {
     public void setLoginUsers(String loginUsers) {
         this.loginUsers = loginUsers;
     }
+
+    public LoginUsers() {
+    }
+
+    public LoginUsers(String loginUsers) {
+        this.loginUsers = loginUsers;
+    }
 }

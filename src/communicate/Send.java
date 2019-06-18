@@ -1,45 +1,34 @@
 package communicate;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
-/**
- * 使用多线程封装发送端
- */
 public class Send implements Runnable {
-    private BufferedReader console;
+
     private DataOutputStream dos;
     private Socket client;
-    private boolean isRunning;
+    private boolean isRunning = true;
     private String name;
 
-    public Send(Socket client,String name) {
+    public Send(Socket client, String name) {
         this.client = client;
-        console = new BufferedReader(new InputStreamReader(System.in));
-        this.isRunning=true;
-        this.name=name;
+        this.name = name;
         try {
             dos = new DataOutputStream(client.getOutputStream());
+            //发送用户名
             send(name);
         } catch (IOException e) {
             System.out.println("客户端异常");
             this.release();
         }
-
     }
 
-    @Override
-    public void run() {
-        while (isRunning){
-            String msg = getStrFromConsole();
-            if (!msg.equals("")){
-                send(msg);
-            }
-        }
+    public String getStrFromSendText() {
+
+        return CommController.getInstance().chatArea.getText();
     }
+
     private void send(String msg) {
         try {
             dos.writeUTF(msg);
@@ -50,21 +39,26 @@ public class Send implements Runnable {
         }
     }
 
-    /**
-     *
-     * 从控制台获取消息
-     */
-    private String getStrFromConsole(){
-        try {
-            return console.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+    @Override
+    public void run() {
+        while (isRunning) {
+            String message = getStrFromSendText();
+            if (!message.equals("") && CommController.getInstance().isSending) {
+                send(message);
+                CommController.getInstance().chatArea.clear();
+                CommController.getInstance().isSending = false;
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return "";
     }
 
+    //释放资源
     private void release() {
         this.isRunning = false;
-        ReUtils.close(dos,client);
+        ReUtils.close(dos, client);
     }
 }
