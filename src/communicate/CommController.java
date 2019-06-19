@@ -29,11 +29,11 @@ public class CommController {
         return instance;
     }
 
-    public CommController(){
+    public CommController() {
         instance = this;
     }
 
-    public void sendMsg(){
+    public void sendMsg() {
         isSending = true;
     }
 }

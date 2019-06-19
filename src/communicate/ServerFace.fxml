@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="communicate.ServerFaceController">
-   <children>
-      <TextArea editable="false" layoutX="11.0" layoutY="23.0" prefHeight="189.0" prefWidth="578.0" />
-      <ListView fx:id="onlineUsers" layoutX="13.0" layoutY="228.0" prefHeight="167.0" prefWidth="578.0" />
-   </children>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Pane?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="communicate.Server">
+    <children>
+        <ListView fx:id="onlineUsers" layoutX="5.0" layoutY="45.0" prefHeight="350.0" prefWidth="586.0"/>
+        <Label layoutX="28.0" layoutY="14.0" prefHeight="20.0" prefWidth="94.0" text="在线用户："/>
+    </children>
 </Pane>

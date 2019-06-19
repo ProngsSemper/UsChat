@@ -10,7 +10,7 @@ import java.net.Socket;
 public class Receive implements Runnable {
     private DataInputStream dis;
     private Socket client;
-    private boolean isRunning=true;
+    private boolean isRunning = true;
 
     public Receive(Socket client) {
         this.client = client;
@@ -34,10 +34,10 @@ public class Receive implements Runnable {
 
     @Override
     public void run() {
-        while (isRunning){
+        while (isRunning) {
             String msg = receive();
-            if (!msg.equals("")){
-               CommController.getInstance().msgArea.appendText("\n"+msg);
+            if (!msg.equals("")) {
+                CommController.getInstance().msgArea.appendText("\n" + msg);
             }
         }
     }

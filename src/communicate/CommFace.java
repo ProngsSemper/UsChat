@@ -10,6 +10,7 @@ import java.net.Socket;
 
 public class CommFace {
     private String name;
+
     public void showCommFace(String name) {
         this.name = name;
         Stage stage = new Stage();
@@ -30,10 +31,10 @@ public class CommFace {
 
     }
 
-    public void client(String name){
+    public void client(String name) {
         try {
-            Socket socket = new Socket("localhost",12345);
-            new Thread(new Send(socket,name)).start();
+            Socket socket = new Socket("localhost", 12345);
+            new Thread(new Send(socket, name)).start();
             new Thread(new Receive(socket)).start();
         } catch (IOException e) {
             e.printStackTrace();

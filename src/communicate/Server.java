@@ -1,5 +1,11 @@
 package communicate;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,6 +15,29 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server implements Runnable {
     private static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
+    private static Server instance;
+
+    public static Server getInstance() {
+        return instance;
+    }
+
+    public Server() {
+        instance = this;
+    }
+
+    @FXML
+    public ListView<String> onlineUsers;
+
+    public void onlineUsers(ListView<String> onlineUsers) {
+        for (int i = 0; i < all.size(); i++) {
+            onlineUsers.refresh();
+            ObservableList<String> strList = FXCollections.observableArrayList(all.get(i).name);
+            onlineUsers.setItems(strList);
+//            onlineUsers.clear();
+//            String name = all.get(i).name;
+//            onlineUsers.appendText(name+"\n");
+        }
+    }
 
     @Override
     public void run() {
@@ -112,6 +141,7 @@ public class Server implements Runnable {
                 if (!msg.equals("")) {
                     sendOthers(msg, false);
                 }
+                Server.getInstance().onlineUsers(Server.getInstance().onlineUsers);
             }
         }
     }

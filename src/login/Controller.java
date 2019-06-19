@@ -27,7 +27,7 @@ public class Controller {
 
     /**
      * 登陆时若用户名不存在提示用户是否已经注册或用户名是否写错
-     *若用户名正确密码错误则提示密码错误
+     * 若用户名正确密码错误则提示密码错误
      */
     public void Login() throws Exception {
         DBUtil userNameDBUtil = new DBUtil();
