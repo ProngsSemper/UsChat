@@ -30,7 +30,7 @@ public class Server implements Runnable {
         return instance;
     }
 
-    Server() {
+    public Server() {
         instance = this;
     }
 
@@ -45,7 +45,7 @@ public class Server implements Runnable {
      *
      * @param onlineUsers
      */
-    private void onlineUsers(ListView<String> onlineUsers) {
+    public void onlineUsers(ListView<String> onlineUsers) {
         for (Channel channel : all) {
             list.add(channel.name);
             strList = FXCollections.observableArrayList(list);
