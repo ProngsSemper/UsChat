@@ -1,6 +1,7 @@
 package login;
 
 import communicate.CommFace;
+import communicate.CommFaceContorller;
 import db.DBUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -32,16 +33,14 @@ public class Controller {
      */
     public void login() throws Exception {
         DBUtil userNameDBUtil = new DBUtil();
-        DBUtil passwordNameDBUtil = new DBUtil();
         String userNameSql = "select * from users where username =" + "'" + loginUsernameField.getText() + "'";
-        String passwordSql = "select * from users where PASSWORD =" + "'" + loginPasswordField.getText() + "'";
         ResultSet usernameResult = userNameDBUtil.check(userNameSql);
-        ResultSet passwordResult = passwordNameDBUtil.check(passwordSql);
         if (usernameResult.next()) {
-            if (!(passwordResult.next())) {
+            if (!(loginPasswordField.getText().equals(usernameResult.getString("PASSWORD")))) {
                 AlterBox.display("登陆失败！", "密码错误！");
             } else {
                 CommFace commFace = new CommFace();
+
                 commFace.showCommFace(loginUsernameField.getText());
                 LoginFace.getInstance().stage.close();
             }

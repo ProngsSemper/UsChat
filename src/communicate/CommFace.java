@@ -1,5 +1,6 @@
 package communicate;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,7 +27,7 @@ public class CommFace {
             stage.setScene(window);
             stage.setTitle("聊天室");
             stage.show();
-            stage.setOnCloseRequest(e->System.exit(0));
+            stage.setOnCloseRequest(e -> System.exit(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,9 +35,8 @@ public class CommFace {
           开启客户端并将用户名传给客户端
          */
         client(name);
-        stage.show();
 
-        LoginFace.getInstance().onlineUsers(LoginFace.getInstance().onlineUsers);
+//        stage.show();
 
     }
 

@@ -43,7 +43,7 @@ public class Send implements Runnable {
      */
     private String getStrFromSendText() {
 
-        return LoginFace.getInstance().chatArea.getText();
+        return CommFaceContorller.getInstance().chatArea.getText();
 //        try {
 //            return console.readLine();
 //        } catch (IOException e) {
@@ -74,10 +74,10 @@ public class Send implements Runnable {
     public void run() {
         while (isRunning) {
             String message = getStrFromSendText();
-            if (!message.equals("") && LoginFace.getInstance().isSending) {
+            if (!message.equals("") && CommFaceContorller.getInstance().isSending) {
                 send(message);
-                LoginFace.getInstance().chatArea.clear();
-                LoginFace.getInstance().isSending = false;
+                CommFaceContorller.getInstance().chatArea.clear();
+                CommFaceContorller.getInstance().isSending = false;
             }
 //            if (!message.equals("")){
 //                send(message);

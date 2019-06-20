@@ -1,5 +1,7 @@
 package communicate;
 
+import javafx.application.Platform;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -46,9 +48,43 @@ class Receive implements Runnable {
     public void run() {
         while (isRunning) {
             String msg = receive();
-            if (!"".equals(msg)) {
-                LoginFace.getInstance().msgArea.appendText("\n\n" + msg);
+            if (msg.startsWith("Online")) {
+                int start = 6;
+                int end = 0;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommFaceContorller.getInstance().strList.clear();
+                    }
+                });
+
+                while (msg.indexOf(",", start) != -1) {
+                    end = msg.indexOf(",", start + 1);
+                    if (end == -1) {
+                        break;
+                    }
+                    String name =msg.substring(start + 1, end);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            CommFaceContorller.getInstance().strList.add(name);
+                        }
+                    });
+                    start = end;
+                }
+                String name = msg.substring(start + 1);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommFaceContorller.getInstance().strList.add(name);
+                        CommFaceContorller.getInstance().onlineUsers.setItems(CommFaceContorller.getInstance().strList);
+                    }
+                });
+
+            } else if (!"".equals(msg)) {
+                CommFaceContorller.getInstance().msgArea.appendText(msg + "\n\n");
             }
+
         }
     }
 

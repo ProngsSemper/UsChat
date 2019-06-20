@@ -3,15 +3,18 @@ package communicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.util.List;
+
 /**
  * @author Prongs
  */
-public class LoginFace {
+public class CommFaceContorller {
     @FXML
     public Button send;
 
@@ -28,16 +31,8 @@ public class LoginFace {
     public TextArea msgArea = new TextArea();
 
     @FXML
-    public ListView<String> onlineUsers;
-
-    void onlineUsers(ListView<String> onlineUsers) {
-        for (int i = 0; i < Server.getAll().size(); i++) {
-            onlineUsers.refresh();
-            ObservableList<String> strList = FXCollections.observableArrayList(Server.getAll().get(i).name);
-            onlineUsers.setItems(strList);
-        }
-    }
-
+    public ListView<String> onlineUsers = new ListView<>();
+    ObservableList<String> strList = FXCollections.observableArrayList();
     /**
      * 判断发送状态，避免出现死循环现象
      */
@@ -46,20 +41,22 @@ public class LoginFace {
     /**
      * 参考群里师兄讲解的单例方法，获取组件。
      */
-    private static LoginFace instance;
+    private static CommFaceContorller instance;
 
-    static LoginFace getInstance() {
+    static CommFaceContorller getInstance() {
         return instance;
     }
 
-    public LoginFace() {
+    public CommFaceContorller() {
         instance = this;
+        onlineUsers.setItems(strList);
     }
 
     /**
-     *发送消息
+     * 发送消息
      */
     public void sendMsg() {
         isSending = true;
     }
+    
 }

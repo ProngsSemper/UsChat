@@ -19,26 +19,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Prongs
  */
 public class Server implements Runnable {
-    static CopyOnWriteArrayList<Channel> getAll() {
-        return all;
-    }
 
-    private static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
+    static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
+
+    @FXML
+    public ListView<String> onlineUsers = new ListView<>();
+
+    static List<String> list = new ArrayList<>();
+    static ObservableList<String> strList;
+
     private static Server instance;
 
-    private static Server getInstance() {
+    static Server getInstance() {
         return instance;
     }
 
     public Server() {
         instance = this;
     }
-
-    @FXML
-    public ListView<String> onlineUsers = new ListView<>();
-
-    private static List<String> list = new ArrayList<>();
-    private ObservableList<String> strList;
 
     /**
      * 显示在线用户列表
@@ -81,8 +79,18 @@ public class Server implements Runnable {
         private DataInputStream dis;
         private DataOutputStream dos;
         private Socket client;
-        private boolean isRunning;
+        boolean isRunning;
         String name;
+
+//        private static Channel instance;
+//
+//        static Channel getInstance() {
+//            return instance;
+//        }
+//
+//        public Channel() {
+//            instance = this;
+//        }
 
         Channel(Socket client) {
             this.client = client;
@@ -115,6 +123,11 @@ public class Server implements Runnable {
 
         private void send(String msg) {
             try {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 dos.writeUTF(msg);
                 dos.flush();
             } catch (IOException e) {
@@ -163,6 +176,13 @@ public class Server implements Runnable {
             all.remove(this);
             //用户退出后从在线用户列表中删除此用户  存在问题：最后一个退出的用户无法从在线用户列表中删除
             list.clear();
+            String Online = "Online";
+            for (Channel channel : all) {
+                Online += "," + channel.name;
+            }
+            for (Channel channel : all) {
+                channel.send(Online);
+            }
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -179,6 +199,12 @@ public class Server implements Runnable {
                  1.参考CSDN上对出现Not on FX application thread; currentThread = *的异常的解决方案
                  2.用户登录后用户名即可出现在用户列表中
                  */
+                String Online = "Online";
+                for (Channel channel : all) {
+                    Online += "," + channel.name;
+                }
+                send(Online);
+                sendOthers(Online,true);
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
