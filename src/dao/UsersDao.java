@@ -11,6 +11,11 @@ import java.sql.SQLException;
  * @author Prongs
  */
 public class UsersDao {
+    /**
+     * 将用户添加进数据库
+     * @param users
+     * @throws SQLException
+     */
     public void addUser(Users users) throws SQLException {
         Connection connection = DBUtil.getConnection();
         String sql = "" +

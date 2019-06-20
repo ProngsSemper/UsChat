@@ -1,9 +1,10 @@
 package communicate;
 
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,9 +36,6 @@ public class CommFace {
           开启客户端并将用户名传给客户端
          */
         client(name);
-
-//        stage.show();
-
     }
 
     /**

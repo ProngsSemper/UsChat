@@ -3,13 +3,13 @@ package communicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import java.util.List;
+import javafx.scene.input.KeyCharacterCombination;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 
 /**
  * @author Prongs
@@ -49,7 +49,6 @@ public class CommFaceContorller {
 
     public CommFaceContorller() {
         instance = this;
-        onlineUsers.setItems(strList);
     }
 
     /**
@@ -58,5 +57,5 @@ public class CommFaceContorller {
     public void sendMsg() {
         isSending = true;
     }
-    
+
 }

@@ -1,17 +1,13 @@
 package communicate;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 /**
  * @author Prongs
  */
 public class Send implements Runnable {
-
-    private BufferedReader console;
 
     private DataOutputStream dos;
     private Socket client;
@@ -20,11 +16,12 @@ public class Send implements Runnable {
 
     /**
      * 创建构造方法，让客户端可以开启发送线程
+     *
      * @param client
      * @param name
      */
     Send(Socket client, String name) {
-        console = new BufferedReader(new InputStreamReader(System.in));
+
         this.client = client;
         this.name = name;
         try {
@@ -39,6 +36,7 @@ public class Send implements Runnable {
 
     /**
      * 获得聊天区域消息
+     *
      * @return
      */
     private String getStrFromSendText() {
@@ -54,6 +52,7 @@ public class Send implements Runnable {
 
     /**
      * 发送方法
+     *
      * @param msg
      */
     private void send(String msg) {
@@ -79,11 +78,8 @@ public class Send implements Runnable {
                 CommFaceContorller.getInstance().chatArea.clear();
                 CommFaceContorller.getInstance().isSending = false;
             }
-//            if (!message.equals("")){
-//                send(message);
-//            }
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

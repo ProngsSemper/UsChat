@@ -20,17 +20,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Server implements Runnable {
 
-    static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
+    private static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<Channel>();
 
     @FXML
     public ListView<String> onlineUsers = new ListView<>();
 
-    static List<String> list = new ArrayList<>();
-    static ObservableList<String> strList;
+    private static List<String> list = new ArrayList<>();
+    private static ObservableList<String> strList;
 
     private static Server instance;
 
-    static Server getInstance() {
+    private static Server getInstance() {
         return instance;
     }
 
@@ -43,7 +43,7 @@ public class Server implements Runnable {
      *
      * @param onlineUsers
      */
-    public void onlineUsers(ListView<String> onlineUsers) {
+    private void onlineUsers(ListView<String> onlineUsers) {
         for (Channel channel : all) {
             list.add(channel.name);
             strList = FXCollections.observableArrayList(list);
@@ -56,14 +56,14 @@ public class Server implements Runnable {
     @Override
     public void run() {
         try {
-            Server();
+            this.server();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void Server() throws IOException {
-        System.out.println("-----Server-----");
+    private void server() throws IOException {
+        System.out.println("-----server-----");
         ServerSocket server = new ServerSocket(12345);
         while (true) {
             Socket client = server.accept();
@@ -82,15 +82,6 @@ public class Server implements Runnable {
         boolean isRunning;
         String name;
 
-//        private static Channel instance;
-//
-//        static Channel getInstance() {
-//            return instance;
-//        }
-//
-//        public Channel() {
-//            instance = this;
-//        }
 
         Channel(Socket client) {
             this.client = client;
@@ -109,6 +100,10 @@ public class Server implements Runnable {
             }
         }
 
+        /**
+         * 接收方法
+         * @return
+         */
         private String receive() {
             String message = "";
             try {
@@ -124,6 +119,9 @@ public class Server implements Runnable {
         private void send(String msg) {
             try {
                 try {
+                    /*
+                    防止栈溢出错误
+                     */
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -136,6 +134,12 @@ public class Server implements Runnable {
             }
         }
 
+        /**
+         * 当isSys为true时则为广播消息
+         *
+         * @param msg
+         * @param isSys
+         */
         private void sendOthers(String msg, boolean isSys) {
             boolean isPrivate = msg.startsWith("@");
             if (isPrivate) {
@@ -170,6 +174,10 @@ public class Server implements Runnable {
             }
         }
 
+        /**
+         * 释放资源方法
+         * 释放资源同时更新服务端与客户端的在线用户列表
+         */
         private void release() {
             this.isRunning = false;
             ReUtils.close(dis, dos, client);
@@ -196,15 +204,19 @@ public class Server implements Runnable {
         public void run() {
             while (isRunning) {
                 /*
-                 1.参考CSDN上对出现Not on FX application thread; currentThread = *的异常的解决方案
-                 2.用户登录后用户名即可出现在用户列表中
+                此代码块用作实现客户端在线用户显示功能组成之一
+                将所有的用户名按照"Online,user 1,user 2,...,user n"的格式发送给每个客户端
                  */
                 String Online = "Online";
                 for (Channel channel : all) {
                     Online += "," + channel.name;
                 }
                 send(Online);
-                sendOthers(Online,true);
+                sendOthers(Online, true);
+                /*
+                 1.参考CSDN上对出现Not on FX application thread; currentThread = *的异常的解决方案
+                 2.用户登录后用户名即可出现在用户列表中
+                 */
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
