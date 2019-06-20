@@ -7,11 +7,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ *
+ * @author Prongs
+ */
 public class SignUpFace {
     public void showSignUpFace() {
         Stage stage = new Stage();
-        /**
-         * 通过fxml文件来创建注册界面
+        /*
+          通过fxml文件来创建注册界面
          */
         try {
             Parent signFace = FXMLLoader.load(getClass().getResource("SignUpFace.fxml"));

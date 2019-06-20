@@ -1,19 +1,14 @@
 package model;
 
+/**
+ * @author Prongs
+ */
 public class Users {
     private String username;
     private String password;
 
     public String getUsername() {
         return username;
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 
     public void setUsername(String username) {

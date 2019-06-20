@@ -11,8 +11,11 @@ import model.Users;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Prongs
+ */
 public class Controller {
-    public Button Cancel;
+    public Button cancel;
     public TextField signUpUsernameField;
     public PasswordField signUpPasswordField;
     public PasswordField passwordAgainField;
@@ -21,7 +24,7 @@ public class Controller {
      * 点击取消时可关闭窗口
      */
     public void exit() {
-        Stage stage = (Stage) Cancel.getScene().getWindow();
+        Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
     }
 
@@ -33,7 +36,7 @@ public class Controller {
      */
     public void signup() throws SQLException {
         while (true) {
-            if (signUpPasswordField.getText().equals("")) {
+            if ("".equals(signUpPasswordField.getText())) {
                 AlterBox.display("错误！", "请设置密码！");
                 break;
             } else if (signUpPasswordField.getText().equals(passwordAgainField.getText())) {

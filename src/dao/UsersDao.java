@@ -1,13 +1,15 @@
 package dao;
 
 import db.DBUtil;
-import model.LoginUsers;
 import model.Users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * @author Prongs
+ */
 public class UsersDao {
     public void addUser(Users users) throws SQLException {
         Connection connection = DBUtil.getConnection();
@@ -21,14 +23,4 @@ public class UsersDao {
         preparedStatement.execute();
     }
 
-    public void addLoginUser(LoginUsers loginUsers) throws SQLException {
-        Connection connection = DBUtil.getConnection();
-        String sql = "" +
-                "insert into loginusers" +
-                "(loginUsers)" +
-                "values(?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, loginUsers.getLoginUsers());
-        preparedStatement.execute();
-    }
 }

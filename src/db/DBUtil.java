@@ -2,20 +2,21 @@ package db;
 
 import java.sql.*;
 
+/**
+ * @author Prongs
+ */
 public class DBUtil {
-    private static final String url = "jdbc:mysql://127.0.0.1:3306/jdbcdemo";
-    private static final String name = "root";
-    private static final String password = "huxi913836";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/jdbcdemo";
+    private static final String NAME = "root";
+    private static final String PASSWORD = "huxi913836";
     private static Connection connection = null;
     public PreparedStatement preparedStatement;
 
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, name, password);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            connection = DriverManager.getConnection(URL, NAME, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

@@ -10,14 +10,15 @@ import javafx.stage.Stage;
 
 /**
  * 创建提示
+ * @author Prongs
  */
 public class AlterBox {
 
     public static void display(String title, String message) {
         Stage window = new Stage();
 
-        /**
-         * 让用户不能切换到其他窗口进行操作
+        /*
+          让用户不能切换到其他窗口进行操作
          */
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
