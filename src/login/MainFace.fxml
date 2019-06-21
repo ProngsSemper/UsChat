@@ -9,7 +9,7 @@
         <Label layoutX="128.0" layoutY="132.0" text="用户名："/>
         <Label layoutX="128.0" layoutY="200.0" text="密码："/>
         <TextField fx:id="loginUsernameField" layoutX="210.0" layoutY="127.0" promptText="请输入用户名"/>
-        <Button fx:id="login" layoutX="59.0" layoutY="333.0" mnemonicParsing="false" onAction="#login" text="登陆"/>
+        <Button fx:id="login" layoutX="59.0" layoutY="333.0" mnemonicParsing="false" onAction="#login" text="登录"/>
         <Button fx:id="signUpButton" layoutX="490.0" layoutY="333.0" mnemonicParsing="false" onAction="#signUp"
                 text="注册"/>
         <PasswordField fx:id="loginPasswordField" layoutX="210.0" layoutY="195.0" promptText="请输入密码"/>
