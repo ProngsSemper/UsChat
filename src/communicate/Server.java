@@ -82,7 +82,6 @@ public class Server implements Runnable {
         boolean isRunning;
         String name;
 
-
         Channel(Socket client) {
             this.client = client;
             try {
@@ -102,6 +101,7 @@ public class Server implements Runnable {
 
         /**
          * 接收方法
+         *
          * @return
          */
         private String receive() {

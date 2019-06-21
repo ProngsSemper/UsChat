@@ -10,7 +10,7 @@ public class DBUtil {
     private static final String NAME = "root";
     private static final String PASSWORD = "huxi913836";
     private static Connection connection = null;
-    public PreparedStatement preparedStatement;
+    private PreparedStatement preparedStatement;
 
     static {
         try {
@@ -25,6 +25,13 @@ public class DBUtil {
         return connection;
     }
 
+    /**
+     * 检查数据库中是否有某个数据
+     *
+     * @param sql
+     * @return
+     * @throws SQLException
+     */
     public ResultSet check(String sql) throws SQLException {
         preparedStatement = connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();

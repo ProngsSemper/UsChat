@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- *
  * @author Prongs
  */
 public class SignUpFace {

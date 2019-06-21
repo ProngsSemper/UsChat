@@ -44,7 +44,6 @@ public class ServerFace extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         primaryStage.setOnCloseRequest(e -> System.exit(0));
     }
 }

@@ -1,7 +1,6 @@
 package login;
 
 import communicate.CommFace;
-import communicate.CommFaceContorller;
 import db.DBUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -40,7 +39,6 @@ public class Controller {
                 AlterBox.display("登陆失败！", "密码错误！");
             } else {
                 CommFace commFace = new CommFace();
-
                 commFace.showCommFace(loginUsernameField.getText());
                 LoginFace.getInstance().stage.close();
             }

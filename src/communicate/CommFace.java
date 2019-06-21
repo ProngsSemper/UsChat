@@ -1,14 +1,16 @@
 package communicate;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 
 /**
  * @author Prongs
@@ -23,12 +25,27 @@ public class CommFace {
           通过fxml文件来创建注册界面
          */
         try {
-            Parent signFace = FXMLLoader.load(getClass().getResource("CommFace.fxml"));
-            Scene window = new Scene(signFace, 600, 400);
+            URL location = getClass().getResource("CommFace.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(location);
+            fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+            Parent root = fxmlLoader.load();
+            CommFaceContorller contorller = fxmlLoader.getController();
+            Scene window = new Scene(root, 600, 400);
             stage.setScene(window);
             stage.setTitle("聊天室");
             stage.show();
+
+            //使用回车键即可发送消息
+            contorller.chatArea.addEventFilter(KeyEvent.KEY_PRESSED, Key -> {
+                if (Key.getCode().equals(KeyCode.ENTER)) {
+                    contorller.sendMsg();
+                    Key.consume();
+                }
+            });
+
             stage.setOnCloseRequest(e -> System.exit(0));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

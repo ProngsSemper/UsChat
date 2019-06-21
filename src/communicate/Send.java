@@ -40,14 +40,7 @@ public class Send implements Runnable {
      * @return
      */
     private String getStrFromSendText() {
-
         return CommFaceContorller.getInstance().chatArea.getText();
-//        try {
-//            return console.readLine();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
     }
 
     /**

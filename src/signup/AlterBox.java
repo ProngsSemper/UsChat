@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * 创建提示
+ *
  * @author Prongs
  */
 public class AlterBox {
