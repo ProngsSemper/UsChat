@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 /**
  * @author Prongs
  */
-public class CommFaceContorller {
+public class CommFaceController {
     @FXML
     public Button send;
 
@@ -38,13 +38,13 @@ public class CommFaceContorller {
     /**
      * 参考群里师兄讲解的单例方法，获取组件。
      */
-    private static CommFaceContorller instance;
+    private static CommFaceController instance;
 
-    static CommFaceContorller getInstance() {
+    static CommFaceController getInstance() {
         return instance;
     }
 
-    public CommFaceContorller() {
+    public CommFaceController() {
         instance = this;
     }
 

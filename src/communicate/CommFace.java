@@ -30,7 +30,7 @@ public class CommFace {
             fxmlLoader.setLocation(location);
             fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
             Parent root = fxmlLoader.load();
-            CommFaceContorller contorller = fxmlLoader.getController();
+            CommFaceController contorller = fxmlLoader.getController();
             Scene window = new Scene(root, 600, 400);
             stage.setScene(window);
             stage.setTitle("聊天室");

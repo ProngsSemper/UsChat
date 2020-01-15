@@ -8,7 +8,7 @@ import java.sql.*;
 public class DBUtil {
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/jdbcdemo";
     private static final String NAME = "root";
-    private static final String PASSWORD = "huxi913836";
+    private static final String PASSWORD = "*****";
     private static Connection connection = null;
     private PreparedStatement preparedStatement;
 

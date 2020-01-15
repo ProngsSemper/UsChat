@@ -53,13 +53,10 @@ class Receive implements Runnable {
              */
             if (msg.startsWith("Online")) {
                 int start = 6;
-                int end = 0;
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        //对strList进行更新
-                        CommFaceContorller.getInstance().strList.clear();
-                    }
+                int end;
+                Platform.runLater(() -> {
+                    //对strList进行更新
+                    CommFaceController.getInstance().strList.clear();
                 });
 
                 while (msg.indexOf(",", start) != -1) {
@@ -78,7 +75,7 @@ class Receive implements Runnable {
                         @Override
                         public void run() {
                             //把用户名传入strList
-                            CommFaceContorller.getInstance().strList.add(name);
+                            CommFaceController.getInstance().strList.add(name);
                         }
                     });
                     //让本次结束的位置成为下次开始的位置达到提取所有逗号前用户名的目的
@@ -86,18 +83,15 @@ class Receive implements Runnable {
                 }
                 //提取完最后一个逗号前的用户名后还要提取最后一个逗号后面的用户名，下面就是把最后一个逗号后的字符串全部提取作最后的用户名
                 String name = msg.substring(start + 1);
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        CommFaceContorller.getInstance().strList.add(name);
-                        //将用户名添加到列表
-                        CommFaceContorller.getInstance().onlineUsers.setItems(CommFaceContorller.getInstance().strList);
-                    }
+                Platform.runLater(() -> {
+                    CommFaceController.getInstance().strList.add(name);
+                    //将用户名添加到列表
+                    CommFaceController.getInstance().onlineUsers.setItems(CommFaceController.getInstance().strList);
                 });
 
             } else if (!"".equals(msg)) {
                 //普通消息的传输
-                CommFaceContorller.getInstance().msgArea.appendText(msg + "\n\n");
+                CommFaceController.getInstance().msgArea.appendText(msg + "\n\n");
             }
 
         }

@@ -40,7 +40,7 @@ public class Send implements Runnable {
      * @return
      */
     private String getStrFromSendText() {
-        return CommFaceContorller.getInstance().chatArea.getText();
+        return CommFaceController.getInstance().chatArea.getText();
     }
 
     /**
@@ -66,10 +66,10 @@ public class Send implements Runnable {
     public void run() {
         while (isRunning) {
             String message = getStrFromSendText();
-            if (!message.equals("") && CommFaceContorller.getInstance().isSending) {
+            if (!message.equals("") && CommFaceController.getInstance().isSending) {
                 send(message);
-                CommFaceContorller.getInstance().chatArea.clear();
-                CommFaceContorller.getInstance().isSending = false;
+                CommFaceController.getInstance().chatArea.clear();
+                CommFaceController.getInstance().isSending = false;
             }
             try {
                 Thread.sleep(100);
